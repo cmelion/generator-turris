@@ -26,6 +26,13 @@ module.exports = yeoman.generators.Base.extend({
       name: 'description',
       message: 'Your project description',
       default: 'No description yet',
+    }, {
+      type: 'list',
+      name: 'style',
+      message: 'Do you want to use less, scss, styl or plain css?',
+      choices: ['less', 'scss', 'styl', 'css'],
+      default: 'less',
+      store: true, // save for future
     }];
 
     this.prompt(prompts, function (props) {
@@ -54,12 +61,20 @@ module.exports = yeoman.generators.Base.extend({
         this.destinationPath('.editorconfig')
       );
       this.fs.copy(
+        this.templatePath('eslintrc'),
+        this.destinationPath('.eslintrc')
+      );
+      this.fs.copy(
         this.templatePath('gitignore'),
         this.destinationPath('.gitignore')
       );
       this.fs.copy(
         this.templatePath('buildConfig.js'),
         this.destinationPath('buildConfig.js')
+      );
+      this.fs.copy(
+        this.templatePath('esdoc.json'),
+        this.destinationPath('esdoc.json')
       );
       this.fs.copy(
         this.templatePath('gulpfile.js'),
@@ -90,8 +105,8 @@ module.exports = yeoman.generators.Base.extend({
         this.props
       );
       this.fs.copy(
-        this.templatePath('style'),
-        this.destinationPath('style')
+        this.templatePath('style/main.less'),
+        this.destinationPath('style/main.' + this.props.style)
       );
       this.fs.copy(
         this.templatePath('test'),
@@ -105,6 +120,6 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    this.installDependencies();
+    this.npmInstall();
   }
 });

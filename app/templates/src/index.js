@@ -1,7 +1,7 @@
 /* istanbul ignore if  */
 if (__WEBPACK__) {
-    require('bootstrap');
-    require('../style/main.less');
+    require('bootstrap/dist/css/bootstrap.css');
+    require('../style/main.<%= style %>');
 }
 import App from './app.jsx';
 
